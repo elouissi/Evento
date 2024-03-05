@@ -11,7 +11,7 @@ class StoreEvenementRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,21 @@ class StoreEvenementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-        ];
+            'image'=>'required|image|mimes:png,jpg,svg',
+            'lieux'=>'required',
+            'titre'=>'required',
+            'prix'=>'required',
+            'durée'=>'required',
+            'description'=>'required',
+            'capacity'=>'required',
+            'localisation'=>'required',
+            'date' => [
+                'required',
+                'date',
+                'after_or_equal:today' // Vérifie que la date est supérieure ou égale à la date d'aujourd'hui
+            ],
+            'categorie_id'=>'required',
+            'accptance' =>'required',
+         ];
     }
 }

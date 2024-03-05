@@ -22,7 +22,7 @@ return new class extends Migration
             $table->enum('status',['accept','refusable','attend'])->default('attend');
             $table->enum('accptance',['auto','manuel'])->default('auto');
             $table->bigInteger('capacity');
-            $table->bigInteger('tickets_vendus');
+            $table->bigInteger('tickets_vendus')->nullable();
             $table->text('localisation');
             $table->date('date');
             $table->unsignedBigInteger('organisateur');

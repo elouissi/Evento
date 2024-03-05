@@ -13,6 +13,7 @@
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link rel="stylesheet" href="{{asset('public/css/style.scss')}}">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <!-- CSS Files -->
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
@@ -365,7 +366,8 @@
         @for($i = 0 ;$i < count($evenements); $i += 2)
         <div class="row list-project">
             <div class="col-md-7">
-                <img src="{{$evenements[$i]->image}}" alt="project-image" class="rounded tablet-top">
+              <img src="{{ asset('storage/'.$evenements[$i]->image) }}" alt="project-image" class="rounded">
+ 
             </div>
 
             <!-- / column -->
@@ -384,8 +386,16 @@
                 </div>
                 <!-- / project-info-box -->
     
-                <a href="#" class="btn btn-primary d-block">VIEW EVENT</a>
-            </div>
+              
+
+                <form action="{{ route('DeleteEvent', $evenements[$i]->id) }}" method="POST">
+                  <a href="{{route('EditEvent',$evenements[$i]->id)}}" class="btn btn-danger d-block">UPDATE </a>
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-primary">Delete</button>
+              </form>
+  
+              </div>
             <!-- / column -->
         </div>
         <!-- / row list-project -->
@@ -408,15 +418,19 @@
                     <p><b>places:</b> {{$evenements[$i+1]->capacity}}</p>
                 </div>
                 <!-- / project-info-box -->
-                <a href="#" class="btn btn-primary d-block">VIEW EVENT</a>
-
+                <form action="{{ route('DeleteEvent', $evenements[$i+1]->id) }}" method="POST">
+                  <a href="{{route('EditEvent',$evenements[$i+1]->id)}}" class="btn btn-danger d-block">UPDATE </a>
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-primary">Delete</button>
+              </form>
     
              </div>
             <!-- / column -->
     
             <div class="col-md-7">
-                <img src="{{$evenements[$i +1]->image}}" alt="project-image" class="rounded">
-            </div>
+              <img src="{{ asset('storage/'.$evenements[$i+1]->image) }}" alt="project-image" class="rounded">           
+             </div>
             <div class="spacer-line-fw border-secondary opc-25 mt-30 mb-30">&nbsp;</div>
 
             @endif
@@ -425,7 +439,132 @@
 
         @endfor
         {{ $evenements->links('vendor.pagination.bootstrap-5') }}
+        <div class="container">
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#form">
+            creation des evenements
+          </button>  
+        </div>
+        
+        <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">Create </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form action="{{route('CreateEvent')}}" method="POST"  enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label >Cliquer ici pour ajouter la photo
+                    </label>
+                    <input type="file" class="form-control" id="image" name="image">                
+                    <small id="emailHelp" class="form-text text-muted">Your information is safe with us.</small>
+                    @error('image')
+                    <span class="text-danger" > {{$message}}</span>
+                 @enderror
+                  </div>
 
+                  <div class="form-group">
+                    <label for="">titre</label>
+                    <input type="text" name="titre" class="form-control"placeholder="titre">
+                    <small  class="form-text text-muted">Your information is safe with us.</small>
+                    @error('titre')
+                    <span class="text-danger" > {{$message}}</span>
+                 @enderror
+                  </div>
+                  <div class="form-group">
+                    <label for="">description</label>
+                    <textarea type="text" name="description" class="form-control"placeholder="ecrivez votre description ici"></textarea>
+                    <small  class="form-text text-muted">Your information is safe with us.</small>
+                    @error('description')
+                    <span class="text-danger" > {{$message}}</span>
+                 @enderror
+                  </div>
+                  <div class="form-group">
+                    <label for="email1">lieux</label>
+                    <input type="adresse" name="lieux" class="form-control" id="adresse1" aria-describedby="adresseHelp" placeholder="Enter lieux">
+                    <small id="adresseHelp" class="form-text text-muted">Your information is safe with us.</small>
+                    @error('lieux')
+                    <span class="text-danger" > {{$message}}</span>
+                 @enderror
+                  </div>
+                  <div class="form-group">
+                    <label >localisation</label>
+                    <input type="adresse" name="localisation" class="form-control"  aria-describedby="adresseHelp" placeholder="Enter localisation">
+                    <small id="adresseHelp" class="form-text text-muted">Your information is safe with us.</small>
+                    @error('localisation')
+                    <span class="text-danger" > {{$message}}</span>
+                 @enderror
+                  </div>
+                  <div class="form-group">
+                    <label for="email1">prix</label>
+                    <input type="number" name="prix" class="form-control"  aria-describedby="prixHelp" placeholder="Enter prix">
+                    <small id="prixHelp" class="form-text text-muted">Your information is safe with us.</small>
+                    @error('prix')
+                    <span class="text-danger" > {{$message}}</span>
+                 @enderror
+                  </div>
+                  <div class="form-group">
+                    <label for="1">durée</label>
+                    <select class="form-control" name="durée">
+                      <option selected >selectionner une la durée</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                  
+                    </select>  
+                    @error('durée')
+                    <span class="text-danger" > {{$message}}</span>
+                 @enderror             
+                     </div>
+                  <div class="form-group">
+                    <label for="1">capacity </label>
+                    <input type="number" class="form-control" name="capacity" placeholder="la capacity ">
+                    @error('capacity')
+                    <span class="text-danger" > {{$message}}</span>
+                 @enderror
+                  </div>
+                  <div class="form-group">
+                    <label for="1">date </label>
+                    <input type="date" name="date" class="form-control" id="2" placeholder="la date ">
+                    @error('date')
+                    <span class="text-danger" > {{$message}}</span>
+                 @enderror
+                  </div>
+                  <div class="form-group">
+                    <label for="1">categorie </label>
+                    <select class="form-control" name="categorie_id">
+                      <option selected >selectionner une categorie</option>
+                      @foreach($categories as $categorie)
+                      <option value="{{$categorie->id}}" >{{$categorie->nom}}</option>
+                      @endforeach
+                    </select>
+                    @error('categorie_id')
+                    <span class="text-danger" > {{$message}}</span>
+                 @enderror
+                  </div>
+                  <div class="form-group">
+                    <label for="1">ci vous voulez controller l'autorisation a la participation a ce evenement </label>
+                    <div class="form-check">
+                      <input class="form-check-input" name="accptance" value="manuel"  type="radio" >
+                      <label class="form-check-label" for="exampleRadios1">
+                        accepter
+                      </label>
+                    </div>
+                  
+                  </div>
+                </div>
+                <div class="modal-footer border-top-0 d-flex justify-content-center">
+                  <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
 
         <!-- / row list-project -->
     
@@ -480,6 +619,7 @@
 
 </html>
 <style>
+  
 
 /*------- portfolio -------*/
 .project {
