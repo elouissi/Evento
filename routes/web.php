@@ -40,14 +40,14 @@ Route::patch('/evenement/refuse/{evenement}', [EvenementController::class, 'refu
 Route::get('/categorie', [CategorieController::class, 'index'])->name('categorie');
 Route::post('/categorie/create', [CategorieController::class, 'store'])->name('CreateCat');
 Route::delete('/categorie/{categorie}', [CategorieController::class, 'destroy'])->name('DeleteCat');
-Route::get('/categorie/{Categorie}', [CategorieController::class, 'edit'])->name('EditEvent');
+Route::get('/categorie/{Categorie}', [CategorieController::class, 'edit'])->name('EditCat');
 Route::put('/categorie/{Categorie}', [CategorieController::class, 'update'])->name('UpdateCat');
 
 Route::get('/users', [UserController::class, 'index'])->name('users');
-Route::post('/categorie/create', [UserController::class, 'store'])->name('CreateCat');
-Route::delete('/categorie/{categorie}', [UserController::class, 'destroy'])->name('DeleteCat');
-Route::get('/categorie/{Categorie}', [UserController::class, 'edit'])->name('EditEvent');
-Route::put('/categorie/{Categorie}', [UserController::class, 'update'])->name('UpdateCat');
+// Route::post('/categorie/create', [UserController::class, 'store'])->name('CreateCat');
+// Route::delete('/categorie/{categorie}', [UserController::class, 'destroy'])->name('DeleteCat');
+// Route::get('/categorie/{Categorie}', [UserController::class, 'edit'])->name('EditEvent');
+// Route::put('/categorie/{Categorie}', [UserController::class, 'update'])->name('UpdateCat');
 });
 
 Route::get('/', [HomeController::class, 'index']);

@@ -62,8 +62,8 @@
           </li>
           <li class="" >
             <a href="{{route('users')}}">
-              <i class="now-ui-icons location_map-big"></i>
-                         <p>users</p>
+              <i class="now-ui-icons users_single-02"></i>
+              <p>users</p>
             </a>
           </li>
           @endif
@@ -184,7 +184,7 @@
                     <form action="{{ route('DeleteCat', $categorie->id) }}" method="POST" >
                       @csrf
                       @method('delete')
-                      <a href="{{route('EditEvent',$categorie->id)}}" class="btn btn-danger d-block">UPDATE </a>
+                      <a href="{{route('EditCat',$categorie->id)}}" class="btn btn-danger d-block">UPDATE </a>
 
                       <button type="submit" class="btn btn-primary d-block">delete</button>
                   </form>

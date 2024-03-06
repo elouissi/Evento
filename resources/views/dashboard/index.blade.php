@@ -49,7 +49,7 @@
           CT
         </a>
         <a href="{{url('home')}}" class="simple-text logo-normal">
-          Creative Tim
+          EVENTO
         </a>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
@@ -76,8 +76,8 @@
           </li>
           <li class="" >
             <a href="{{route('users')}}">
-              <i class="now-ui-icons location_map-big"></i>
-                         <p>users</p>
+              <i class="now-ui-icons users_single-02"></i>
+              <p>users</p>
             </a>
           </li>
           @endif

@@ -54,16 +54,16 @@
           </li>
           @if (Auth::check() && Auth::user()->hasRole('admin'))
 
-          <li class="active" >
+          <li class="" >
             <a href="{{route('categorie')}}">
               <i class="now-ui-icons location_map-big"></i>
                          <p>categorie</p>
             </a>
           </li>
-          <li class="" >
+          <li class="active" >
             <a href="{{route('users')}}">
-              <i class="now-ui-icons location_map-big"></i>
-                         <p>users</p>
+                <i class="now-ui-icons users_single-02"></i>
+                <p>users</p>
             </a>
           </li>
           @endif
@@ -204,12 +204,12 @@
                   @endif
                   @if($user->roles->first()->name == "admin" )
 
-                  <td>c'est un admin</td>
+                  <p>c'est un admin</p>
 
                   @endif
                   @if($user->roles->first()->name == "organisateur" )
 
-                  <td>c'est un organisateur</td>
+                  <p>c'est un organisateur</p>
 
                   @endif
 

@@ -51,7 +51,7 @@
               <p>Evenement</p>
             </a>
           </li>
-            @if (Auth::check() || Auth::user()->hasRole('admin'))
+            @if (Auth::check() && Auth::user()->hasRole('admin'))
 
           <li class="" >
             <a href="{{route('categorie')}}">
@@ -61,8 +61,8 @@
           </li>
           <li class="" >
             <a href="{{route('users')}}">
-              <i class="now-ui-icons location_map-big"></i>
-                         <p>users</p>
+              <i class="now-ui-icons users_single-02"></i>
+              <p>users</p>
             </a>
           </li>
           @endif

@@ -49,24 +49,39 @@
           CT
         </a>
         <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
+          EVENTO
         </a>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-            <li>
-                <a href="{{url('dashboard')}}">
-                  <i class="now-ui-icons design_app"></i>
-                  <p>Dashboard</p>
-                </a>
-              </li>
-              <li class="active" >
-                <a href="{{route('evenement')}}">
-                  <i class="now-ui-icons design_app"></i>
-                  <p>Evenement</p>
-                </a>
-              </li>
-       
+          <li>
+            <a href="{{url('dashboard')}}">
+              <i class="now-ui-icons design_app"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="" >
+            <a href="{{route('evenement')}}">
+              <i class="now-ui-icons design_bullet-list-67"></i>
+              <p>Evenement</p>
+            </a>
+          </li>
+          @if (Auth::check() && Auth::user()->hasRole('admin'))
+
+          <li class="active" >
+            <a href="{{route('categorie')}}">
+              <i class="now-ui-icons location_map-big"></i>
+                         <p>categorie</p>
+            </a>
+          </li>
+          <li class="" >
+            <a href="{{route('users')}}">
+              <i class="now-ui-icons users_single-02"></i>
+              <p>users</p>
+            </a>
+          </li>
+          @endif
+         
         </ul>
       </div>
     </div>

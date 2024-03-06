@@ -47,7 +47,7 @@
                         
                             @auth
                               <li>   
-                                @if (Auth::check() && Auth::user()->hasRole('admin'))
+                                @if (Auth::check() && Auth::user()->hasRole('admin') || Auth::check() && Auth::user()->hasRole('organisateur'))
 
                                 <a href="{{ url('/dashboard') }}" class="page-scroll">dashboard</a></li>
                                 @endif
