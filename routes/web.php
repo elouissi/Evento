@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\EvenementController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,3 +32,11 @@ Route::get('/evenement/edit/{evenement}', [EvenementController::class, 'edit'])-
 Route::put('/evenement/update/{evenement}', [EvenementController::class, 'update'])->name('UpdateEvent');
 Route::patch('/evenement/accept/{evenement}', [EvenementController::class, 'accept'])->name('accept');
 Route::patch('/evenement/refuse/{evenement}', [EvenementController::class, 'refuse'])->name('refuse');
+
+
+
+Route::get('/categorie', [CategorieController::class, 'index'])->name('categorie');
+Route::post('/categorie/create', [CategorieController::class, 'store'])->name('CreateCat');
+Route::delete('/categorie/{categorie}', [CategorieController::class, 'destroy'])->name('DeleteCat');
+Route::get('/categorie/{Categorie}', [CategorieController::class, 'edit'])->name('EditEvent');
+Route::put('/categorie/{Categorie}', [CategorieController::class, 'update'])->name('UpdateCat');

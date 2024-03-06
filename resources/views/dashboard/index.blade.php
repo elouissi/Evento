@@ -54,18 +54,27 @@
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-          <li class="active">
+          <li class="active" >
             <a href="{{url('dashboard')}}">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
             </a>
           </li>
-          <li  >
+          <li class="" >
             <a href="{{route('evenement')}}">
-              <i class="now-ui-icons media-2_sound-wave"></i>
+              <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Evenement</p>
             </a>
           </li>
+          @if (Auth::check() && Auth::user()->hasRole('admin'))
+
+          <li class="" >
+            <a href="{{route('categorie')}}">
+              <i class="now-ui-icons location_map-big"></i>
+                         <p>categorie</p>
+            </a>
+          </li>
+          @endif
          
         </ul>
       </div>

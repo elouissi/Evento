@@ -137,164 +137,21 @@
       <!-- End Navbar -->
       <div class="panel-header panel-header-sm">
       </div>
-      <div class="content">
-        <div class="row">
-          <div class="col-md-8">
-            <div class="card">
-              <div class="card-header">
-                <h5 class="title">Edit evenement</h5>
-              </div>
-              <div class="card-body">
-                <form action="{{route('UpdateEvent',$evenement->id)}}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                  <div class="row">
-                    <div class="col-md-5 pr-1">
-                      <div class="form-group">
-                        <label>titre</label>
-                        <input type="text" name="titre" class="form-control" value="{{$evenement->titre}}">
-                        @error('titre')
-                        <span class="text-danger" > {{$message}}</span>
-                     @enderror
-                      </div>
-                    </div>
-                    <div class="col-md-3 px-1">
-                      <div class="form-group">
-                        <label>description</label>
-                        <input type="text" name="description" class="form-control" placeholder="{{$evenement->description}}" value="{{$evenement->description}}">
-                        @error('description')
-                        <span class="text-danger" > {{$message}}</span>
-                     @enderror
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">lieux</label>
-                        <input type="text" class="form-control" placeholder="lieux" value="{{$evenement->lieux}}" name="lieux" >
-                        @error('lieux')
-                        <span class="text-danger" > {{$message}}</span>
-                     @enderror
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6 pr-1">
-                      <div class="form-group">
-                        <label>localisation</label>
-                        <input type="text" class="form-control" placeholder="localisation" name="localisation" value="{{$evenement->localisation}}">
-                        @error('localisation')
-                        <span class="text-danger" > {{$message}}</span>
-                     @enderror
-                      </div>
-                    </div>
-                    <div class="col-md-6 pl-1">
-                      <div class="form-group">
-                        <label>prix</label>
-                        <input type="number" class="form-control" placeholder="prix" name="prix"  value="{{$evenement->prix}}">
-                        @error('prix')
-                        <span class="text-danger" > {{$message}}</span>
-                     @enderror
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label for="1">capacity</label>
-                        <input type="number" class="form-control" placeholder="prix" name="capacity"  value="{{$evenement->capacity}}">
-
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label for="1">durée</label>
-                        <select class="form-control" name="durée">
-                          <option selected >{{$evenement->durée}}</option>
-                          <option value="1">1h</option>
-                          <option value="2">2h</option>
-                          <option value="3">3h</option>
-                          <option value="4">4h</option>
-                      
-                        </select> 
-                        @error('durée')
-                        <span class="text-danger" > {{$message}}</span>
-                     @enderror   
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-4 pr-1">
-                      <div class="form-group">
-                        <label>capacity</label>
-                        <input type="number" class="form-control" placeholder="capacity" value="{{$evenement->capacity}}">
-                        @error('capacity')
-                        <span class="text-danger" > {{$message}}</span>
-                     @enderror
-                      </div>
-                    </div>
-                    <div class="col-md-4 px-1">
-                      <div class="form-group">
-                        <label>date</label>
-                        <input type="date" class="form-control" name="date" placeholder="date" value="{{$evenement->date}}">
-                        @error('date')
-                        <span class="text-danger" > {{$message}}</span>
-                     @enderror
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label for="1">categorie </label>
-                        <select class="form-control" name="categorie_id">
-                          <option selected value="{{$evenement->categorie->id}}" >{{$evenement->categorie->nom}}</option>
-                          @foreach($categories as $categorie)
-                          <option value="{{$categorie->id}}" >{{$categorie->nom}}</option>
-                          @endforeach
-                        </select>
-                        @error('categorie_id')
-                        <span class="text-danger" > {{$message}}</span>
-                     @enderror
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-check">
-                            <label for="1">ci vous voulez controller l'autorisation a la participation a ce evenement </label><br>
-
-                            <input class="form-check-input" name="accptance" value="manuel"  type="radio"st >
-                            <label class="form-check-label" for="exampleRadios1">
-                              accepter
-                            </label>
-                          </div>
-                          <button type="submit" class="btn btn-primary">update</button>
-
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card card-user">
-              
-                <img src="{{ asset('storage/'.$evenement->image) }}" alt="...">
-              
-        
-              <hr>
-              <div class="button-container">
-                <label >Cliquer ici pour ajouter la photo
-                </label>
-                <input type="file" class="form-control" id="image" name="image">  
-                @error('image')
-                <span class="text-danger" > {{$message}}</span>
-             @enderror              
-              </div>
-            </form>
-
-            </div>
-          </div>
+      <form action="{{ route('UpdateCat', $categorie->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+        <div class="form-group" style="padding: 33px;">
+            <label for="nom">Nom</label>
+            <input type="text" name="nom" class="form-control" placeholder="{{ $categorie->nom }}" value="{{ $categorie->nom }}">
+            <small class="form-text text-muted">Your information is safe with us.</small>
+            @error('nom')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+            <button type="submit" class="btn btn-primary d-block">Update</button>
         </div>
+    </form>
+    
+    
       </div>
       <footer class="footer">
         <div class=" container-fluid ">
