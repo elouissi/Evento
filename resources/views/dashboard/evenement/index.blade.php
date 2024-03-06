@@ -332,6 +332,86 @@
         <!-- / row list-project -->
     </div>
     @endif
+    @if (Auth::check() && Auth::user()->hasRole('admin'))
+    <div class="col-md-12" style="    margin-top: 126px;">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title"> Simple Table</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th>
+                  id
+                </th>
+                <th>
+                  titre 
+                </th>
+                <th>
+                  prix
+                </th>
+                <th>
+                  capacity
+                </th>
+                <th>
+                  organisateur
+                </th>
+
+                <th>
+                  action
+                </th>
+                
+              </thead>
+              <tbody>
+                @foreach($evenements as $evenement)
+                <tr>
+                  <td>
+                    {{$evenement->id}}
+                  </td>
+                  <td>
+                    {{$evenement->titre}}
+                  </td>
+                  <td>
+                    {{$evenement->prix}} $
+                  </td>
+                  <td>
+                    {{$evenement->capacity}}
+                  </td>
+                  <td>
+                    {{$evenement->user->name}}
+                  </td>
+                  <td style="display: flex;gap:5px">
+                    <form action="{{ route('accept', $evenement->id) }}" method="POST" >
+                      @csrf
+                      @method('PATCH')
+                      <button type="submit" class="btn btn-primary d-block">accept</button>
+                  </form>
+                  
+                  <form action="{{ route('refuse', $evenement->id) }}" method="POST" >
+                      @csrf
+                      @method('PATCH')
+                      <button type="submit" class="btn btn-danger d-block">refuse</button>
+                  </form>
+
+                    
+                  </td>
+                  
+                </tr>
+            
+            
+           
+   @endforeach
+   {{ $evenements->links('vendor.pagination.bootstrap-5') }}
+
+             
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    @endif
       <footer class="footer">
         <div class=" container-fluid ">
           <nav>

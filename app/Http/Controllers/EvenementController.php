@@ -6,6 +6,7 @@ use App\Models\Evenement;
 use App\Http\Requests\StoreEvenementRequest;
 use App\Http\Requests\UpdateEvenementRequest;
 use App\Models\Categorie;
+use Illuminate\Support\Facades\Auth;
 
 class EvenementController extends Controller
 {
@@ -17,9 +18,17 @@ class EvenementController extends Controller
         // Dans votre contrôleur ou votre vue
 
 // Vous pouvez maintenant utiliser $user pour accéder aux informations de l'utilisateur
+     
+        if (Auth::user()->hasRole('organisateur')) {
+            $evenements = Evenement::with('user','categorie')->latest()->paginate(6);
+            $categories = Categorie::all();
+      }else{
 
-        $evenements = Evenement::with('user','categorie')->latest()->paginate(6);
-        $categories = Categorie::all();
+            $categories = Categorie::all();
+            $evenements = Evenement::with('user','categorie')->where('status','attend')->paginate(6);
+  
+
+      }
         return view('dashboard.evenement.index', compact('evenements','categories'));
 
 
@@ -31,6 +40,20 @@ class EvenementController extends Controller
     public function create()
     {
         //
+    }
+    public function accept(Evenement $evenement)
+    {
+        Evenement::where('id',$evenement->id)->update(['status'=>'accept']);
+        return redirect(route('evenement'));
+
+
+    }
+    public function refuse(Evenement $evenement)
+    {
+        Evenement::where('id',$evenement->id)->update(['status'=>'refusable']);
+        return redirect(route('evenement'));
+
+
     }
 
     /**

@@ -29,3 +29,5 @@ Route::post('/evenement/create', [EvenementController::class, 'store'])->name('C
 Route::delete('/evenement/delete/{evenement}', [EvenementController::class, 'destroy'])->name('DeleteEvent');
 Route::get('/evenement/edit/{evenement}', [EvenementController::class, 'edit'])->name('EditEvent');
 Route::put('/evenement/update/{evenement}', [EvenementController::class, 'update'])->name('UpdateEvent');
+Route::patch('/evenement/accept/{evenement}', [EvenementController::class, 'accept'])->name('accept');
+Route::patch('/evenement/refuse/{evenement}', [EvenementController::class, 'refuse'])->name('refuse');
