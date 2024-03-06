@@ -49,6 +49,8 @@ class EvenementController extends Controller
                 $accept = "auto"; 
             }
 
+            
+
            Evenement::create([
             'lieux' => $request->input('lieux'),
             'titre' => $request->input('titre'),
@@ -83,10 +85,10 @@ class EvenementController extends Controller
      */
     public function edit(Evenement $evenement)
     {
-        
-        $evenements = Evenement::with('user','categorie')->latest()->paginate(6);
         $categories = Categorie::all();
-        return view('dashboard.evenement.edit',compact('evenements','categories'));
+
+        $evenement = Evenement::with('user', 'categorie')->where('id', $evenement->id)->first();
+         return view('dashboard.evenement.edit',compact('evenement','categories'));
         
     }
 
@@ -95,8 +97,41 @@ class EvenementController extends Controller
      */
     public function update(UpdateEvenementRequest $request, Evenement $evenement)
     {
-        //
+         $request->validated();
+    
+        $manuel = $request['accptance'] ?? null;
+        if ($manuel !== null) {
+            $accept = "manuel";
+        } else {
+            $accept = "auto";
+        }
+    
+        // Vérifier si un nouveau fichier a été téléchargé
+         if ($request->hasFile('image')) {
+            $image = $request->file('image')->store('evenement', 'public');
+        } else {
+            $image = $evenement->image; // Conserver l'image actuelle si aucun nouveau fichier n'a été téléchargé
+        }
+    
+        $evenement->update([
+            'lieux' => $request->input('lieux'),
+            'titre' => $request->input('titre'),
+            'prix' => $request->input('prix'),
+            'durée' => $request->input('durée'),
+            'accptance' => $accept,
+            'description' => $request->input('description'),
+            'capacity' => $request->input('capacity'),
+            'localisation' => $request->input('localisation'),
+            'date' => $request->input('date'),
+            'categorie_id' => $request->input('categorie_id'),
+            'tickets_vendus' => 0,
+            'image' => $image, // Utiliser la nouvelle image ou l'image existante
+            'organisateur' => auth()->id(),
+        ]);
+    
+        return redirect(route('evenement'));
     }
+    
 
     /**
      * Remove the specified resource from storage.

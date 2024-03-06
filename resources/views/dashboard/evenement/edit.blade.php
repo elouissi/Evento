@@ -52,54 +52,19 @@
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-          <li>
-            <a href="./dashboard.html">
-              <i class="now-ui-icons design_app"></i>
-              <p>Dashboard</p>
-            </a>
-          </li>
-          <li>
-            <a href="./icons.html">
-              <i class="now-ui-icons education_atom"></i>
-              <p>Icons</p>
-            </a>
-          </li>
-          <li>
-            <a href="./map.html">
-              <i class="now-ui-icons location_map-big"></i>
-              <p>Maps</p>
-            </a>
-          </li>
-          <li>
-            <a href="./notifications.html">
-              <i class="now-ui-icons ui-1_bell-53"></i>
-              <p>Notifications</p>
-            </a>
-          </li>
-          <li class="active ">
-            <a href="./user.html">
-              <i class="now-ui-icons users_single-02"></i>
-              <p>User Profile</p>
-            </a>
-          </li>
-          <li>
-            <a href="./tables.html">
-              <i class="now-ui-icons design_bullet-list-67"></i>
-              <p>Table List</p>
-            </a>
-          </li>
-          <li>
-            <a href="./typography.html">
-              <i class="now-ui-icons text_caps-small"></i>
-              <p>Typography</p>
-            </a>
-          </li>
-          <li class="active-pro">
-            <a href="./upgrade.html">
-              <i class="now-ui-icons arrows-1_cloud-download-93"></i>
-              <p>Upgrade to PRO</p>
-            </a>
-          </li>
+            <li>
+                <a href="{{url('dashboard')}}">
+                  <i class="now-ui-icons design_app"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li>
+              <li class="active" >
+                <a href="{{route('evenement')}}">
+                  <i class="now-ui-icons design_app"></i>
+                  <p>Evenement</p>
+                </a>
+              </li>
+       
         </ul>
       </div>
     </div>
@@ -175,117 +140,156 @@
           <div class="col-md-8">
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Edit Profile</h5>
+                <h5 class="title">Edit evenement</h5>
               </div>
               <div class="card-body">
-                <form>
+                <form action="{{route('UpdateEvent',$evenement->id)}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
                   <div class="row">
                     <div class="col-md-5 pr-1">
                       <div class="form-group">
-                        <label>Company (disabled)</label>
-                        <input type="text" class="form-control" disabled="" placeholder="Company" value="Creative Code Inc.">
+                        <label>titre</label>
+                        <input type="text" name="titre" class="form-control" value="{{$evenement->titre}}">
+                        @error('titre')
+                        <span class="text-danger" > {{$message}}</span>
+                     @enderror
                       </div>
                     </div>
                     <div class="col-md-3 px-1">
                       <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" class="form-control" placeholder="Username" value="michael23">
+                        <label>description</label>
+                        <input type="text" name="description" class="form-control" placeholder="{{$evenement->description}}" value="{{$evenement->description}}">
+                        @error('description')
+                        <span class="text-danger" > {{$message}}</span>
+                     @enderror
                       </div>
                     </div>
                     <div class="col-md-4 pl-1">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" placeholder="Email">
+                        <label for="exampleInputEmail1">lieux</label>
+                        <input type="text" class="form-control" placeholder="lieux" value="{{$evenement->lieux}}" name="lieux" >
+                        @error('lieux')
+                        <span class="text-danger" > {{$message}}</span>
+                     @enderror
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
-                        <label>First Name</label>
-                        <input type="text" class="form-control" placeholder="Company" value="Mike">
+                        <label>localisation</label>
+                        <input type="text" class="form-control" placeholder="localisation" name="localisation" value="{{$evenement->localisation}}">
+                        @error('localisation')
+                        <span class="text-danger" > {{$message}}</span>
+                     @enderror
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">
                       <div class="form-group">
-                        <label>Last Name</label>
-                        <input type="text" class="form-control" placeholder="Last Name" value="Andrew">
+                        <label>prix</label>
+                        <input type="number" class="form-control" placeholder="prix" name="prix"  value="{{$evenement->prix}}">
+                        @error('prix')
+                        <span class="text-danger" > {{$message}}</span>
+                     @enderror
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label>Address</label>
-                        <input type="text" class="form-control" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
+                        <label for="1">capacity</label>
+                        <input type="number" class="form-control" placeholder="prix" name="capacity"  value="{{$evenement->capacity}}">
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="1">durée</label>
+                        <select class="form-control" name="durée">
+                          <option selected >{{$evenement->durée}}</option>
+                          <option value="1">1h</option>
+                          <option value="2">2h</option>
+                          <option value="3">3h</option>
+                          <option value="4">4h</option>
+                      
+                        </select> 
+                        @error('durée')
+                        <span class="text-danger" > {{$message}}</span>
+                     @enderror   
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-4 pr-1">
                       <div class="form-group">
-                        <label>City</label>
-                        <input type="text" class="form-control" placeholder="City" value="Mike">
+                        <label>capacity</label>
+                        <input type="number" class="form-control" placeholder="capacity" value="{{$evenement->capacity}}">
+                        @error('capacity')
+                        <span class="text-danger" > {{$message}}</span>
+                     @enderror
                       </div>
                     </div>
                     <div class="col-md-4 px-1">
                       <div class="form-group">
-                        <label>Country</label>
-                        <input type="text" class="form-control" placeholder="Country" value="Andrew">
+                        <label>date</label>
+                        <input type="date" class="form-control" name="date" placeholder="date" value="{{$evenement->date}}">
+                        @error('date')
+                        <span class="text-danger" > {{$message}}</span>
+                     @enderror
                       </div>
                     </div>
                     <div class="col-md-4 pl-1">
                       <div class="form-group">
-                        <label>Postal Code</label>
-                        <input type="number" class="form-control" placeholder="ZIP Code">
+                        <label for="1">categorie </label>
+                        <select class="form-control" name="categorie_id">
+                          <option selected value="{{$evenement->categorie->id}}" >{{$evenement->categorie->nom}}</option>
+                          @foreach($categories as $categorie)
+                          <option value="{{$categorie->id}}" >{{$categorie->nom}}</option>
+                          @endforeach
+                        </select>
+                        @error('categorie_id')
+                        <span class="text-danger" > {{$message}}</span>
+                     @enderror
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-12">
-                      <div class="form-group">
-                        <label>About Me</label>
-                        <textarea rows="4" cols="80" class="form-control" placeholder="Here can be your description" value="Mike">Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</textarea>
-                      </div>
+                        <div class="form-check">
+                            <label for="1">ci vous voulez controller l'autorisation a la participation a ce evenement </label><br>
+
+                            <input class="form-check-input" name="accptance" value="manuel"  type="radio"st >
+                            <label class="form-check-label" for="exampleRadios1">
+                              accepter
+                            </label>
+                          </div>
+                          <button type="submit" class="btn btn-primary">update</button>
+
                     </div>
                   </div>
-                </form>
               </div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="card card-user">
-              <div class="image">
-                <img src="../assets/img/bg5.jpg" alt="...">
-              </div>
-              <div class="card-body">
-                <div class="author">
-                  <a href="#">
-                    <img class="avatar border-gray" src="../assets/img/mike.jpg" alt="...">
-                    <h5 class="title">Mike Andrew</h5>
-                  </a>
-                  <p class="description">
-                    michael24
-                  </p>
-                </div>
-                <p class="description text-center">
-                  "Lamborghini Mercy <br>
-                  Your chick she so thirsty <br>
-                  I'm in that two seat Lambo"
-                </p>
-              </div>
+              
+                <img src="{{ asset('storage/'.$evenement->image) }}" alt="...">
+              
+        
               <hr>
               <div class="button-container">
-                <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-                  <i class="fab fa-facebook-f"></i>
-                </button>
-                <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-                  <i class="fab fa-twitter"></i>
-                </button>
-                <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-                  <i class="fab fa-google-plus-g"></i>
-                </button>
+                <label >Cliquer ici pour ajouter la photo
+                </label>
+                <input type="file" class="form-control" id="image" name="image">  
+                @error('image')
+                <span class="text-danger" > {{$message}}</span>
+             @enderror              
               </div>
+            </form>
+
             </div>
           </div>
         </div>

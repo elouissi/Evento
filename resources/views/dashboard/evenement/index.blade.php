@@ -119,250 +119,14 @@
         </div>
       </nav>
       <!-- End Navbar -->
-      {{-- <div class="panel-header panel-header-sm">
-      </div>
-      <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title"> Simple Table</h4>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead class=" text-primary">
-                      <th>
-                        image
-                      </th>
-                      <th>
-                        lieux
-                      </th>
-                      <th>
-                        titre
-                      </th>
-                      <th>
-                        prix
-                      </th>
-                      <th>
-                        durée
-                      </th>
-                      <th>
-                        description
-                      </th>
-                      <th>
-                        status
-                      </th>
-                      <th>
-                        accptance
-                      </th>
-                      <th>
-                        capacity
-                      </th>
-                      <th>
-                        tickets_vendus
-                      </th>
-                      <th>
-                        localisation
-                      </th>
-                      <th>
-                        date
-                      </th>
-                      <th>
-                        organisateur
-                      </th>
-                      <th>
-                        categorie
-                      </th>
-                   
-                    </thead>
-                    <tbody>
-                      @foreach($evenements as $evenement)
-                      <tr>
-                        <td>
-                          {{$evenement->image}}
-                        </td>
-                        <td>
-                          {{$evenement->lieux}}
-                        </td>
-                        <td>
-                          {{$evenement->titre}}
-                        </td>
-                        <td>
-                          {{$evenement->prix}}
-                        </td>
-                        <td>
-                          {{$evenement->durée}}
-                        </td>
-                        <td>
-                          {{$evenement->description}}
-                        </td>
-                        <td>
-                          {{$evenement->status}}
-                        </td>
-                        <td>
-                          {{$evenement->accptance}}
-                        </td>
-                        <td>
-                          {{$evenement->capacity}}
-                        </td>
-                        <td>
-                          {{$evenement->tickets_vendus}}
-                        </td>
-                        <td>
-                          {{$evenement->localisation}}
-                        </td>
-                        <td>
-                          {{$evenement->date}}
-                        </td>
-                        <td>
-                          {{$evenement->user->name}}
-                        </td>
-                        <td>
-                          {{$evenement->categorie->nom}}
-                        </td>
-                      
-                      </tr>
-                     
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="card card-plain">
-              <div class="card-header">
-                <h4 class="card-title"> Table on Plain Background</h4>
-                <p class="category"> Here is a subtitle for this table</p>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead class=" text-primary">
-                      <th>
-                        Name
-                      </th>
-                      <th>
-                        Country
-                      </th>
-                      <th>
-                        City
-                      </th>
-                      <th class="text-right">
-                        Salary
-                      </th>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          Dakota Rice
-                        </td>
-                        <td>
-                          Niger
-                        </td>
-                        <td>
-                          Oud-Turnhout
-                        </td>
-                        <td class="text-right">
-                          $36,738
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Minerva Hooper
-                        </td>
-                        <td>
-                          Curaçao
-                        </td>
-                        <td>
-                          Sinaai-Waas
-                        </td>
-                        <td class="text-right">
-                          $23,789
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Sage Rodriguez
-                        </td>
-                        <td>
-                          Netherlands
-                        </td>
-                        <td>
-                          Baileux
-                        </td>
-                        <td class="text-right">
-                          $56,142
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Philip Chaney
-                        </td>
-                        <td>
-                          Korea, South
-                        </td>
-                        <td>
-                          Overland Park
-                        </td>
-                        <td class="text-right">
-                          $38,735
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Doris Greene
-                        </td>
-                        <td>
-                          Malawi
-                        </td>
-                        <td>
-                          Feldkirchen in Kärnten
-                        </td>
-                        <td class="text-right">
-                          $63,542
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Mason Porter
-                        </td>
-                        <td>
-                          Chile
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-right">
-                          $78,615
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Jon Porter
-                        </td>
-                        <td>
-                          Portugal
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-right">
-                          $98,615
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> --}}
-      <div class="container" style="    margin-top: 73px;">
+      @if (Auth::check() && Auth::user()->hasRole('organisateur'))
 
+    
+      <div class="container" style="    margin-top: 73px;">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#form" >
+            creation des evenements
+          </button>  
+ 
         @for($i = 0 ;$i < count($evenements); $i += 2)
         <div class="row list-project">
             <div class="col-md-7">
@@ -439,11 +203,7 @@
 
         @endfor
         {{ $evenements->links('vendor.pagination.bootstrap-5') }}
-        <div class="container">
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#form">
-            creation des evenements
-          </button>  
-        </div>
+   
         
         <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -571,6 +331,7 @@
     
         <!-- / row list-project -->
     </div>
+    @endif
       <footer class="footer">
         <div class=" container-fluid ">
           <nav>
