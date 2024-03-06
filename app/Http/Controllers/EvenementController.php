@@ -20,7 +20,7 @@ class EvenementController extends Controller
 // Vous pouvez maintenant utiliser $user pour accéder aux informations de l'utilisateur
      
         if (Auth::user()->hasRole('organisateur')) {
-            $evenements = Evenement::with('user','categorie')->latest()->paginate(6);
+            $evenements = Evenement::with('user','categorie')->where('organisateur',auth()->id())->latest()->paginate(6);
             $categories = Categorie::all();
       }else{
 
@@ -100,7 +100,11 @@ class EvenementController extends Controller
      */
     public function show(Evenement $evenement)
     {
-        //
+        $evenements = Evenement::with('user','categorie')->where('status','accept')->latest()->paginate(6);
+
+        $evenement = Evenement::with('user','categorie')->findOrFail($evenement->id);
+         return view('detailsEvent',compact('evenement','evenements'));
+
     }
 
     /**

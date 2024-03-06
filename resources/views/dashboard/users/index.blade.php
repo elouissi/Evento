@@ -147,12 +147,12 @@
     
     <div class="col-md-12" style="    margin-top: 126px;">
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#form" >
-        creation des categories
+        creation des users
       </button>  
       
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title"> tableaux des categories</h4>
+          <h4 class="card-title"> tableaux des users</h4>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -164,6 +164,12 @@
                 <th>
                   nom 
                 </th>
+                <th>
+                  email 
+                </th>
+                <th>
+                  role 
+                </th>
                 
                 <th>
                   action
@@ -171,23 +177,42 @@
                 
               </thead>
               <tbody>
-                @foreach($categories as $categorie)
+                @foreach($users as $user)
                 <tr>
                   <td>
-                    {{$categorie->id}}
+                    {{$user->id}}
                   </td>
                   <td>
-                    {{$categorie->nom}}
+                    {{$user->name}}
+                  </td>
+                  <td>
+                    {{$user->email}}
+                  </td>
+                  
+                  <td>
+                    {{$user->roles->first()->name}}
                   </td>
                 
                   <td style="display: flex;gap:5px">
-                    <form action="{{ route('DeleteCat', $categorie->id) }}" method="POST" >
+                    @if($user->roles->first()->name !== "admin" && $user->roles->first()->name !== "organisateur" )
+                    <form action="{{ route('BanerUser', $user->id) }}" method="POST" >
                       @csrf
-                      @method('delete')
-                      <a href="{{route('EditEvent',$categorie->id)}}" class="btn btn-danger d-block">UPDATE </a>
-
-                      <button type="submit" class="btn btn-primary d-block">delete</button>
+                      @method('put')
+ 
+                      <button type="submit" class="btn btn-primary d-block">baner</button>
                   </form>
+                  @endif
+                  @if($user->roles->first()->name == "admin" )
+
+                  <td>c'est un admin</td>
+
+                  @endif
+                  @if($user->roles->first()->name == "organisateur" )
+
+                  <td>c'est un organisateur</td>
+
+                  @endif
+
                  
 
                     
@@ -211,7 +236,7 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header border-bottom-0">
-            <h5 class="modal-title" id="exampleModalLabel">Create categorie </h5>
+            <h5 class="modal-title" id="exampleModalLabel">Create user </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

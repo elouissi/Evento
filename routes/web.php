@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\EvenementController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +23,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('home');
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard']);
+ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard']);
 
+Route::group(['middleware' => ['auth','verified','role:admin|organisateur']], function () {
 
 Route::get('/evenement', [EvenementController::class, 'index'])->name('evenement');
 Route::post('/evenement/create', [EvenementController::class, 'store'])->name('CreateEvent');
@@ -40,3 +42,18 @@ Route::post('/categorie/create', [CategorieController::class, 'store'])->name('C
 Route::delete('/categorie/{categorie}', [CategorieController::class, 'destroy'])->name('DeleteCat');
 Route::get('/categorie/{Categorie}', [CategorieController::class, 'edit'])->name('EditEvent');
 Route::put('/categorie/{Categorie}', [CategorieController::class, 'update'])->name('UpdateCat');
+
+Route::get('/users', [UserController::class, 'index'])->name('users');
+Route::post('/categorie/create', [UserController::class, 'store'])->name('CreateCat');
+Route::delete('/categorie/{categorie}', [UserController::class, 'destroy'])->name('DeleteCat');
+Route::get('/categorie/{Categorie}', [UserController::class, 'edit'])->name('EditEvent');
+Route::put('/categorie/{Categorie}', [UserController::class, 'update'])->name('UpdateCat');
+});
+
+Route::get('/', [HomeController::class, 'index']);
+Route::fallback(function(){
+    return redirect('/');
+});
+Route::get('/evenement/show/{evenement}', [EvenementController::class, 'show'])->name('ShowEvent');
+
+

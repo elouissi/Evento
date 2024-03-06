@@ -33,8 +33,8 @@
         <a href="http://www.creative-tim.com" class="simple-text logo-mini">
           CT
         </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
+        <a href="{{url('home')}}" class="simple-text logo-normal">
+          EVENTO
         </a>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
@@ -51,12 +51,18 @@
               <p>Evenement</p>
             </a>
           </li>
-          @if (Auth::check() && Auth::user()->hasRole('admin'))
+            @if (Auth::check() || Auth::user()->hasRole('admin'))
 
           <li class="" >
             <a href="{{route('categorie')}}">
               <i class="now-ui-icons location_map-big"></i>
                          <p>categorie</p>
+            </a>
+          </li>
+          <li class="" >
+            <a href="{{route('users')}}">
+              <i class="now-ui-icons location_map-big"></i>
+                         <p>users</p>
             </a>
           </li>
           @endif

@@ -48,7 +48,7 @@
         <a href="http://www.creative-tim.com" class="simple-text logo-mini">
           CT
         </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+        <a href="{{url('home')}}" class="simple-text logo-normal">
           Creative Tim
         </a>
       </div>
@@ -72,6 +72,12 @@
             <a href="{{route('categorie')}}">
               <i class="now-ui-icons location_map-big"></i>
                          <p>categorie</p>
+            </a>
+          </li>
+          <li class="" >
+            <a href="{{route('users')}}">
+              <i class="now-ui-icons location_map-big"></i>
+                         <p>users</p>
             </a>
           </li>
           @endif
@@ -414,8 +420,8 @@
           <nav>
             <ul>
               <li>
-                <a href="https://www.creative-tim.com">
-                  Creative Tim
+                <a href="{{url('/home')}}">
+                  EVENTO
                 </a>
               </li>
               <li>
