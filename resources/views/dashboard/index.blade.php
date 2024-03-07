@@ -60,16 +60,20 @@
               <p>Dashboard</p>
             </a>
           </li>
+          @if (Auth::check() && Auth::user()->hasAnyRole('admin','organisateur'))
+
           <li class="" >
             <a href="{{route('evenement')}}">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Evenement</p>
             </a>
           </li>
+          @endif
+
           @if (Auth::check() && Auth::user()->hasRole('admin'))
 
           <li class="" >
-            <a href="{{route('categorie')}}">
+            <a href="{{route('ShowCategorie')}}">
               <i class="now-ui-icons location_map-big"></i>
                          <p>categorie</p>
             </a>
@@ -78,6 +82,14 @@
             <a href="{{route('users')}}">
               <i class="now-ui-icons users_single-02"></i>
               <p>users</p>
+            </a>
+          </li>
+          @endif
+          @if (Auth::check() && Auth::user()->hasRole('organisateur'))
+          <li class="" >
+            <a href="{{route('reservation')}}">
+                <i class="now-ui-icons design_bullet-list-67"></i>
+                <p>reservations</p>
             </a>
           </li>
           @endif
@@ -150,6 +162,11 @@
         </div>
       </nav>
       <!-- End Navbar -->
+      @if(session('success'))
+      <div class="alert alert-success">
+          {{ session('success') }}
+      </div>
+  @endif
       <div class="panel-header panel-header-lg">
         <canvas id="bigDashboardChart"></canvas>
       </div>

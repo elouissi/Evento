@@ -21,7 +21,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#first"><i class="ion-ios-analytics-outline"></i> Landing Zero</a>
+                <a class="navbar-brand page-scroll" href="{{url('/home')}}"><i class="ion-ios-analytics-outline"></i>EVENTO</a>
             </div>
             <div class="navbar-collapse collapse" id="bs-navbar">
                 <ul class="nav navbar-nav">
@@ -34,12 +34,7 @@
                     <li>
                         <a class="page-scroll" href="#three">Gallery</a>
                     </li>
-                    <li>
-                        <a class="page-scroll" href="#four">Features</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#last">Contact</a>
-                    </li>
+                    
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -47,7 +42,7 @@
                         
                             @auth
                               <li>   
-                                @if (Auth::check() && Auth::user()->hasRole('admin') || Auth::check() && Auth::user()->hasRole('organisateur'))
+                                @if (Auth::check() && Auth::user()->hasRole('admin') || Auth::check() && Auth::user()->hasRole('organisateur') || Auth::check() && Auth::user()->hasRole('spectateur'))
 
                                 <a href="{{ url('/dashboard') }}" class="page-scroll">dashboard</a></li>
                                 @endif
@@ -76,8 +71,8 @@
     <header id="first">
         <div class="header-content" style="{{asset('images/parties.gif')}}">
             <div class="inner">
-                <h1 class="cursive">Simple, One Page Design</h1>
-                <h4>A free landing page theme with video background</h4>
+                <h1 class="cursive">evento, evenement reservation</h1>
+                <h4>soiyez le bienvenue au palteform EVENTO pour resrver votre evenement</h4>
                 <hr>
              <a href="#one" class="btn btn-primary btn-xl page-scroll">Get Started</a>
             </div>
@@ -90,12 +85,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 text-center">
-                    <h2 class="margin-top-0 text-primary">Built On The Bootstrap Grid</h2>
+                    <h2 class="margin-top-0 text-primary">reserver un evenement disponible</h2>
                     <br>
                     <p class="text-faded">
                         Bootstrap's responsive grid comes in 4 sizes or "breakpoints": tiny (xs), small(sm), medium(md) and large(lg). These 4 grid sizes enable you create responsive layouts that behave accordingly on different devices.
                     </p>
-                    <a href="#three" class="btn btn-default btn-xl page-scroll">Learn More</a>
+                    <a href="#three" class="btn btn-default btn-xl page-scroll">VOIR TOUS LES EVENEMENTS</a>
                 </div>
             </div>
         </div>

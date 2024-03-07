@@ -6,6 +6,7 @@ use App\Models\Evenement;
 use App\Http\Requests\StoreEvenementRequest;
 use App\Http\Requests\UpdateEvenementRequest;
 use App\Models\Categorie;
+use App\Models\Reservation;
 use Illuminate\Support\Facades\Auth;
 
 class EvenementController extends Controller
@@ -44,14 +45,14 @@ class EvenementController extends Controller
     public function accept(Evenement $evenement)
     {
         Evenement::where('id',$evenement->id)->update(['status'=>'accept']);
-        return redirect(route('evenement'));
+        return redirect(route('evenement'))->with('success', 'evenement accpted Successfully');;
 
 
     }
     public function refuse(Evenement $evenement)
     {
         Evenement::where('id',$evenement->id)->update(['status'=>'refusable']);
-        return redirect(route('evenement'));
+        return redirect(route('evenement'))->with('success', 'evenement refused Successfully');;
 
 
     }
@@ -90,7 +91,7 @@ class EvenementController extends Controller
             'organisateur' => auth()->id(),
          ]);
         
-        return redirect(route('evenement'));
+        return redirect(route('evenement'))->with('success', 'evenement created Successfully');;
 
         
     }
@@ -101,8 +102,13 @@ class EvenementController extends Controller
     public function show(Evenement $evenement)
     {
         $evenements = Evenement::with('user','categorie')->where('status','accept')->latest()->paginate(6);
-
         $evenement = Evenement::with('user','categorie')->findOrFail($evenement->id);
+
+        if(auth()->check()){
+        $reservations = Reservation::where('evenement_id', $evenement->id)->where('user_id', auth()->id())->get();
+        return view('detailsEvent',compact('evenement','evenements','reservations'));
+
+        }
          return view('detailsEvent',compact('evenement','evenements'));
 
     }
@@ -156,7 +162,7 @@ class EvenementController extends Controller
             'organisateur' => auth()->id(),
         ]);
     
-        return redirect(route('evenement'));
+        return redirect(route('evenement'))->with('success', 'evenement updated Successfully');
     }
     
 
@@ -166,7 +172,7 @@ class EvenementController extends Controller
     public function destroy(Evenement $evenement)
     {
         $evenement->delete();
-        return redirect()->route('evenement');
+        return redirect()->route('evenement')->with('success', 'evenement deleted Successfully');;
 
     }
 }

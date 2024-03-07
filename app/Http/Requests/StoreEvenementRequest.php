@@ -36,7 +36,6 @@ class StoreEvenementRequest extends FormRequest
                 'after_or_equal:today' // Vérifie que la date est supérieure ou égale à la date d'aujourd'hui
             ],
             'categorie_id'=>'required',
-            'accptance' =>'required',
-         ];
+          ];
     }
 }

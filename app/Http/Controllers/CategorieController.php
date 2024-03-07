@@ -33,7 +33,7 @@ class CategorieController extends Controller
     {
        $form = $request->validated();
        categorie::create($form);
-       return redirect()->route('categorie');
+       return redirect()->route('ShowCategorie')->with('success', 'Category created Successfully');
     }
 
     /**
@@ -64,7 +64,7 @@ class CategorieController extends Controller
         categorie::findOrFail($id)->update([
             'nom' => $request->nom,
         ]);
-        return redirect()->route('categorie')->with('success', 'Category updated Successfully');
+        return redirect()->route('ShowCategorie')->with('success', 'Category updated Successfully');
     }
     
 
@@ -74,7 +74,7 @@ class CategorieController extends Controller
     public function destroy(categorie $categorie)
     {
         $categorie->delete();
-        return redirect()->route('categorie');
+        return redirect()->route('ShowCategorie')->with('success', 'Category destroyed Successfully');
     }
     
 }

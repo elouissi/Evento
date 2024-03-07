@@ -11,4 +11,8 @@ class UserController extends Controller
         $users = User::all();
         return view('dashboard.users.index', compact('users'));
     }
+    public function BanerUser()  {
+        
+    }
+
 }

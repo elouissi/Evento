@@ -69,7 +69,7 @@
           @if (Auth::check() && Auth::user()->hasRole('admin'))
 
           <li class="active" >
-            <a href="{{route('categorie')}}">
+            <a href="{{route('ShowCategorie')}}">
               <i class="now-ui-icons location_map-big"></i>
                          <p>categorie</p>
             </a>
@@ -78,6 +78,14 @@
             <a href="{{route('users')}}">
               <i class="now-ui-icons users_single-02"></i>
               <p>users</p>
+            </a>
+          </li>
+          @endif
+          @if (Auth::check() && Auth::user()->hasRole('organisateur'))
+          <li class="" >
+            <a href="{{route('reservation')}}">
+                <i class="now-ui-icons design_bullet-list-67"></i>
+                <p>reservations</p>
             </a>
           </li>
           @endif

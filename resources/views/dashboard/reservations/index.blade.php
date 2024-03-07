@@ -54,10 +54,10 @@
           </li>
           @if (Auth::check() && Auth::user()->hasRole('admin'))
 
-          <li class="active" >
-            <a href="{{route('ShowCategorie')}}">
+          <li class="" >
+            <a href="{{route('Showreservation')}}">
               <i class="now-ui-icons location_map-big"></i>
-                         <p>categorie</p>
+                         <p>reservation</p>
             </a>
           </li>
           <li class="" >
@@ -68,13 +68,15 @@
           </li>
           @endif
           @if (Auth::check() && Auth::user()->hasRole('organisateur'))
-          <li class="" >
+          <li class="active">
             <a href="{{route('reservation')}}">
                 <i class="now-ui-icons design_bullet-list-67"></i>
                 <p>reservations</p>
             </a>
           </li>
           @endif
+
+
          
         </ul>
       </div>
@@ -145,7 +147,7 @@
       </nav>
       <!-- End Navbar -->
         
-    @if (Auth::check() && Auth::user()->hasRole('admin'))
+    @if (Auth::check() && Auth::user()->hasRole('organisateur'))
     @if(session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
@@ -157,13 +159,11 @@
     
     
     <div class="col-md-12" style="    margin-top: 126px;">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#form" >
-        creation des categories
-      </button>  
+    
       
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title"> tableaux des categories</h4>
+          <h4 class="card-title"> tableaux des reservations</h4>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -173,7 +173,10 @@
                   id
                 </th>
                 <th>
-                  nom 
+                  nom  
+                </th>
+                <th>
+                  le titre d'evenement  
                 </th>
                 
                 <th>
@@ -182,33 +185,37 @@
                 
               </thead>
               <tbody>
-                @foreach($categories as $categorie)
+                @foreach($reservations as $reservation)
                 <tr>
                   <td>
-                    {{$categorie->id}}
+                    {{$reservation->id}}
                   </td>
                   <td>
-                    {{$categorie->nom}}
+                    {{$reservation->user->name}}
                   </td>
+                  <td>
+                    {{$reservation->evenement->titre}}
+                  </td>
+                  @if($reservation->status == "refuse")
                 
                   <td style="display: flex;gap:5px">
-                    <form action="{{ route('DeleteCat', $categorie->id) }}" method="POST" >
+                    <form action="{{ route('PublishRes', $reservation->id) }}" method="POST" >
                       @csrf
-                      @method('delete')
-                      <a href="{{route('EditCat',$categorie->id)}}" class="btn btn-danger d-block">UPDATE </a>
+                      @method('PATCH')
 
-                      <button type="submit" class="btn btn-primary d-block">delete</button>
+                      <button type="submit" class="btn btn-primary d-block">autoriser</button>
                   </form>
-                 
-
-                    
                   </td>
+                  @endif
+                  @if($reservation->status == "publish")
+                  <td>
+                    automatiquement accept
+                  </td>
+
+                  @endif
                   
                 </tr>
-            
-            
-           
-   @endforeach
+                @endforeach
  
              
               </tbody>
@@ -218,38 +225,7 @@
       </div>
     </div>
     @endif
-    <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header border-bottom-0">
-            <h5 class="modal-title" id="exampleModalLabel">Create categorie </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form action="{{route('CreateCat')}}" method="POST"  enctype="multipart/form-data">
-            @csrf
-            <div class="modal-body">
-              
-              <div class="form-group">
-                <label for="">nom</label>
-                <input type="text" name="nom" class="form-control"placeholder="titre">
-                <small  class="form-text text-muted">Your information is safe with us.</small>
-                @error('titre')
-                <span class="text-danger" > {{$message}}</span>
-             @enderror
-              </div>
-           
-            
-      
-            </div>
-            <div class="modal-footer border-top-0 d-flex justify-content-center">
-              <button type="submit" class="btn btn-success">Submit</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+ 
 
       <footer class="footer">
         <div class=" container-fluid ">

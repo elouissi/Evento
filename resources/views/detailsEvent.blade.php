@@ -71,7 +71,13 @@
             </div>
         </div>
     </nav>
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
     <div class="blog-single " style="    background-color: #282828;   ">
+
         <div class="container">
             <div class="row align-items-start">
                 <div class="col-lg-8 m-15px-tb">
@@ -103,10 +109,31 @@
                         </div>
                    
                     </article>
-                    <a  @auth @if (Auth::user()->hasAnyRole(['spectateur'])) href="{{route('Reserver',$evenement->id)}}"     @endif @endauth @guest href="{{route('login')}}"  @endguest
-                        
-                 class="btn btn-danger d-block">RESERVER </a>
-
+                    @auth    
+                    @if (Auth::user()->hasRole(['spectateur'])) 
+                
+                        {{-- {{ dd($reservations->contains('status','publish'))}} --}}
+                        @if ($reservations->contains('status','publish'))
+                            <a href="{{route('mollie',$evenement->id)}}" class="btn btn-danger d-block">checkout</a>
+                        @elseif ($reservations->contains('status','refuse'))
+                            <!-- Si une réservation avec le statut 'refuse' est trouvée -->
+                            <p>wait response of organizer</p>
+                        @else
+                            <a href="{{route('CreateReserv',$evenement->id)}}" class="btn btn-danger d-block">RESERVER </a>
+                        @endif
+                
+                    @endif
+                @endauth
+                
+                
+                
+                @guest
+                    
+                    <a  href="{{route('register')}}"   class="btn btn-danger d-block">RESERVER </a>
+ 
+                @endguest
+            
+            
                
                 </div>
                 <div class="col-lg-4 m-15px-tb blog-aside">
@@ -134,7 +161,7 @@
                                 </div>
                                 <div class="lpa-right">
                                     <a href="{{route('ShowEvent', $list->id)}}">
-                                        <img src="{{asset('storage/'.$list->image)}}" title="" alt="">
+                                        <img src="{{asset('storage/'.$list->image)}}" title="" alt="image d'evenement">
                                     </a>
                                 </div>
                             </div>

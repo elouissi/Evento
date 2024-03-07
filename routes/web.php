@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\EvenementController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,17 +38,19 @@ Route::patch('/evenement/refuse/{evenement}', [EvenementController::class, 'refu
 
 
 
-Route::get('/categorie', [CategorieController::class, 'index'])->name('categorie');
+Route::get('/categorie/show', [CategorieController::class, 'index'])->name('ShowCategorie');
 Route::post('/categorie/create', [CategorieController::class, 'store'])->name('CreateCat');
 Route::delete('/categorie/{categorie}', [CategorieController::class, 'destroy'])->name('DeleteCat');
 Route::get('/categorie/{Categorie}', [CategorieController::class, 'edit'])->name('EditCat');
 Route::put('/categorie/{Categorie}', [CategorieController::class, 'update'])->name('UpdateCat');
 
+
+
+
+
 Route::get('/users', [UserController::class, 'index'])->name('users');
-// Route::post('/categorie/create', [UserController::class, 'store'])->name('CreateCat');
-// Route::delete('/categorie/{categorie}', [UserController::class, 'destroy'])->name('DeleteCat');
-// Route::get('/categorie/{Categorie}', [UserController::class, 'edit'])->name('EditEvent');
-// Route::put('/categorie/{Categorie}', [UserController::class, 'update'])->name('UpdateCat');
+Route::get('/users/baner', [UserController::class, 'BanerUser'])->name('BanerUser');
+
 });
 
 Route::get('/', [HomeController::class, 'index']);
@@ -55,5 +58,17 @@ Route::fallback(function(){
     return redirect('/');
 });
 Route::get('/evenement/show/{evenement}', [EvenementController::class, 'show'])->name('ShowEvent');
+
+Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation');
+Route::get('/reservation/{reservation}', [ReservationController::class, 'store'])->name('CreateReserv');
+Route::patch('/reservation/publish/{evenement}', [ReservationController::class, 'publish'])->name('PublishRes');
+
+Route::post('mollie', [MollieController::class, 'mollie'])->name('mollie');
+Route::get('/success', [MollieController::class, 'success'])->name('success');
+Route::get('cancel', [MollieController::class, 'cancel'])->name('cancel');
+
+
+
+
 
 
