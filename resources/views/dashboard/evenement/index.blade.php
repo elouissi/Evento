@@ -339,7 +339,7 @@
                   <div class="form-group">
                     <label for="1">ci vous voulez controller l'autorisation a la participation a ce evenement </label>
                     <div class="form-check">
-                      <input class="form-check-input" name="accptance" value="manuel"  type="radio" >
+                      <input class="form-check-input" name="accptance" value="manuel"  type="checkbox" >
                       <label class="form-check-label" for="exampleRadios1">
                         accepter
                       </label>

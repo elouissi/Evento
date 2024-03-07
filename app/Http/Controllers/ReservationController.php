@@ -16,7 +16,10 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $reservations = Reservation::all();
+        $evenements = Evenement::with('user','categorie')->where('organisateur',auth()->id())->pluck('id')->all();
+        $reservations = Reservation::whereIn('evenement_id', $evenements)->get();
+        
+ 
         return view('dashboard.reservations.index',compact('reservations'));
     }
 

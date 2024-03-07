@@ -95,8 +95,16 @@
             </div>
         </div>
     </section>
-
-    <section id="three" class="no-padding">
+    <div class="container_search">
+        <input checked="" class="checkbox" type="checkbox"> 
+        <div class="mainbox">
+            <div class="iconContainer">
+                <svg viewBox="0 0 512 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="search_icon"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path></svg>
+            </div>
+         <input class="search_input" id="hero_field" placeholder="search by title and price" type="text">
+        </div>
+    </div>
+    <section id="search_list" class="no-padding"  >
         <div class="container-fluid">
             <div class="row no-gutter">
                 @foreach($evenements as $evenement )
@@ -120,66 +128,13 @@
                 @endforeach
             
         </div>
+ 
     </section>
-    <section class="container-fluid" id="four">
-        <div class="row">
-            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
-                <h2 class="text-center text-primary">Features</h2>
-                <hr>
-                <div class="media wow fadeInRight">
-                    <h3>Simple</h3>
-                    <div class="media-body media-middle">
-                        <p>What could be easier? Get started fast with this landing page starter theme.</p>
-                    </div>
-                    <div class="media-right">
-                        <i class="icon-lg ion-ios-bolt-outline"></i>
-                    </div>
-                </div>
-                <hr>
-                <div class="media wow fadeIn">
-                    <h3>Free</h3>
-                    <div class="media-left">
-                        <a href="#alertModal" data-toggle="modal" data-target="#alertModal"><i class="icon-lg ion-ios-cloud-download-outline"></i></a>
-                    </div>
-                    <div class="media-body media-middle">
-                        <p>Yes, please. Grab it for yourself, and make something awesome with this.</p>
-                    </div>
-                </div>
-                <hr>
-                <div class="media wow fadeInRight">
-                    <h3>Unique</h3>
-                    <div class="media-body media-middle">
-                        <p>Because you don't want your Bootstrap site, to look like a Bootstrap site.</p>
-                    </div>
-                    <div class="media-right">
-                        <i class="icon-lg ion-ios-snowy"></i>
-                    </div>
-                </div>
-                <hr>
-                <div class="media wow fadeIn">
-                    <h3>Popular</h3>
-                    <div class="media-left">
-                        <i class="icon-lg ion-ios-heart-outline"></i>
-                    </div>
-                    <div class="media-body media-middle">
-                        <p>There's good reason why Bootstrap is the most used frontend framework in the world.</p>
-                    </div>
-                </div>
-                <hr>
-                <div class="media wow fadeInRight">
-                    <h3>Tested</h3>
-                    <div class="media-body media-middle">
-                        <p>Bootstrap is matured and well-tested. It's a stable codebase that provides consistency.</p>
-                    </div>
-                    <div class="media-right">
-                        <i class="icon-lg ion-ios-flask-outline"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
+
  
     <section id="last">
+ 
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
@@ -305,9 +260,32 @@
         </div>
         </div>
     </div>
-    <!--scripts loaded here from cdn for performance -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+
+         $(document).ready(function(){
+      
+
+      $("#hero_field").keyup(function(){
+          var input = $(this).val(); 
+          if(input == "") input = 'all';
+           $.ajax({
+              url: "/search",
+              method: "POST",
+              data: {
+                  _token: '{{ csrf_token() }}', // Inclure le jeton CSRF 
+                  input: input
+              },
+              success: function(data){
+                  $("#search_list").html(data);
+              }
+          });
+      });
+    });
+    </script>
+
+      
+     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
     <script src="{{asset('js/script.js')}}"></script>

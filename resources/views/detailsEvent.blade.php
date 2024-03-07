@@ -114,7 +114,22 @@
                 
                         {{-- {{ dd($reservations->contains('status','publish'))}} --}}
                         @if ($reservations->contains('status','publish'))
-                            <a href="{{route('mollie',$evenement->id)}}" class="btn btn-danger d-block">checkout</a>
+
+                        <form action="{{route('mollie')}}"  method="POST" >
+                            @csrf
+
+                           <input type="number"  style="display:none"  name="prix" value="{{$evenement->prix}}">
+                           <input type="text" style="display:none"  name="id" value="{{$evenement->id}}">
+                           <input type="text" style="display:none"  name="titre" value="{{$evenement->titre}}">
+
+                             <button type="submit" class="btn btn-primary d-block">check out</button>
+
+
+
+
+                        </form>    
+
+
                         @elseif ($reservations->contains('status','refuse'))
                             <!-- Si une réservation avec le statut 'refuse' est trouvée -->
                             <p>wait response of organizer</p>
@@ -148,7 +163,7 @@
                             <div class="latest-post-aside media">
                                 <div class="lpa-left media-body">
                                     <div class="lpa-title">
-                                        <h5  style="color:  #282828" ><a style="color:  #282828"  href="{{route('ShowEvent', $list->id)}}">{{$list->titre}}</a></h5>
+                                        <h5  style="color:  #282828" ><a style="color:#282828"  href="{{route('ShowEvent', $list->id)}}">{{$list->titre}}</a></h5>
                                     </div>
                                     <div class="lpa-meta">
                                         <a  style="color:  #282828" class="name" href="{{route('ShowEvent', $list->id)}}">
