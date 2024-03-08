@@ -71,6 +71,8 @@ Route::get('cancel', [MollieController::class, 'cancel'])->name('cancel');
 
 Route::get('profile', [UserController::class, 'profile' ] )->name('profile');
 Route::post('/search',[HomeController::class,'search']);
+Route::get('/filter',[HomeController::class,'index'])->name('filter');
+
 
 
 

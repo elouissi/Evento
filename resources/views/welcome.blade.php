@@ -95,7 +95,8 @@
             </div>
         </div>
     </section>
-    <div class="container_search">
+    <div class="my-3" style="display: flex">
+    <div class="container_search" >
         <input checked="" class="checkbox" type="checkbox"> 
         <div class="mainbox">
             <div class="iconContainer">
@@ -104,7 +105,17 @@
          <input class="search_input" id="hero_field" placeholder="search by title and price" type="text">
         </div>
     </div>
-    <section id="search_list" class="no-padding"  >
+    <div class="center" style="">
+        <select id="categorie" name="categorie" class="custom-select sources" style=" border-radius: 9px;   border: darkviolet;   height: 47px; width: 168px; background-color: black; margin-left: 32px;">
+          <option value="" selected disabled>choisir une categorie</option>
+
+          @foreach($categories as $categorie)
+          <option value="{{$categorie->id}}"">{{$categorie->nom}}</option>
+         @endforeach
+        </select>
+      </div>
+    </div>
+      <section id="search_list" class="no-padding"  >
         <div class="container-fluid">
             <div class="row no-gutter">
                 @foreach($evenements as $evenement )
@@ -126,6 +137,8 @@
                     </a>
                 </div>
                 @endforeach
+               
+            
             
         </div>
  
@@ -263,26 +276,63 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
 
-         $(document).ready(function(){
-      
-
-      $("#hero_field").keyup(function(){
-          var input = $(this).val(); 
-          if(input == "") input = 'all';
-           $.ajax({
-              url: "/search",
-              method: "POST",
-              data: {
-                  _token: '{{ csrf_token() }}', // Inclure le jeton CSRF 
-                  input: input
-              },
-              success: function(data){
-                  $("#search_list").html(data);
-              }
-          });
-      });
+$(document).ready(function() {
+    $("#hero_field").keyup(function() {
+        var input = $(this).val(); 
+        if(input == "") input = 'all';
+        $.ajax({
+            url: "/search",
+            method: "POST",
+            data: {
+                _token: '{{ csrf_token() }}',
+                input: input
+            },
+            success: function(data) {
+                $("#search_list").html(data);
+            }
+        });
     });
-    </script>
+
+    $("#categorie").on('change', function() {
+    var categorie = $(this).val(); 
+    $.ajax({
+        url: "{{ route('filter') }}",
+        method: "GET",
+        data: {
+            categorie: categorie
+        },
+        success: function(data) {
+            var evenements = data.evenements;
+            var html = '';
+            if (evenements.length > 0) {
+                for (let i = 0; i < evenements.length; i++) {
+                    html += '<div class="col-lg-4 col-sm-6">';
+                    html += '<a href="/evenement/show/' + evenements[i].id + '" class="gallery-box" data-toggle="modal" data-src="//splashbase.s3.amazonaws.com/unsplash/regular/photo-1430916273432-273c2db881a0%3Fq%3D75%26fm%3Djpg%26w%3D1080%26fit%3Dmax%26s%3Df047e8284d2fdc1df0fd57a5d294614d">';
+                    html += '<img src="{{ asset('storage') }}/' + evenements[i].image + '" class="img-responsive" alt="Image 1">';
+                    html += '<div class="gallery-box-caption">';
+                    html += '<div class="gallery-box-content">';
+                    html += '<div>';
+                    html += '<i class="icon-lg ion-ios-search"></i>';
+                    html += '<h2><strong>le nom devenement :</strong> ' + evenements[i].titre + '</h2>';
+                    html += '<p><strong>prix :</strong>' + evenements[i].prix + ' $</p>';
+                    html += '<p><strong>nombre de place :</strong> ' + evenements[i].capacity + '</p>';
+                    html += '<p><strong>description :</strong> ' + evenements[i].description + '</p>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</a>';
+                    html += '</div>';
+                }
+            } else {
+                html += '<h1> evenement n Not Found</h1>';
+            }
+            $("#search_list").html(html);
+        }
+    });
+});
+
+});
+  </script>
 
       
      <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>

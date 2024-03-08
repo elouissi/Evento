@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorie;
 use App\Models\Evenement;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     
-    public function index()
+    public function index(Request $request)
     {
         $evenements = Evenement::with('user','categorie')->where('status','accept')->latest()->paginate(10);
+        $categories = Categorie::all();
+        if ($request->ajax()) {
+
+            $evenements = Evenement::where('categorie_id', $request->input())->get();
  
-        return view('welcome',compact('evenements'));
+            return response()->json(['evenements' => $evenements]);
+        }
+
+ 
+        return view('welcome',compact('evenements','categories'));
     }
 
     public function search(Request $request)
@@ -21,10 +30,12 @@ class HomeController extends Controller
 
 
         $evenements = Evenement::with('user','categorie')->where('status','accept')->latest()->paginate(10);
+        $categories = Categorie::all();
+
  
 
         if ($input == "all") {
-            return view('layouts.search', compact('evenements'));
+            return view('layouts.search', compact('evenements','categories'));
         } else {
  
             $evenements = Evenement::with('user', 'categorie')
@@ -35,7 +46,7 @@ class HomeController extends Controller
             })
             ->get();
          
-            return view('layouts.search', compact('evenements'));
+            return view('layouts.search', compact('evenements','categories'));
         }
     }
     public function dashboard(){
