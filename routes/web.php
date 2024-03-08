@@ -25,9 +25,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
- Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard']);
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard']);
 
 Route::group(['middleware' => ['auth','verified','role:admin|organisateur']], function () {
+
 
 Route::get('/evenement', [EvenementController::class, 'index'])->name('evenement');
 Route::post('/evenement/create', [EvenementController::class, 'store'])->name('CreateEvent');

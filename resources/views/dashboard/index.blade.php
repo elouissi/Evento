@@ -54,14 +54,13 @@
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-          <li class="active" >
+          @if (Auth::check() && Auth::user()->hasRole('admin') || Auth::check() && Auth::user()->hasRole('organisateur'))
+          <li class="active">
             <a href="{{url('dashboard')}}">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
             </a>
           </li>
-          @if (Auth::check() && Auth::user()->hasAnyRole('admin','organisateur'))
-
           <li class="" >
             <a href="{{route('evenement')}}">
               <i class="now-ui-icons design_bullet-list-67"></i>
@@ -69,8 +68,7 @@
             </a>
           </li>
           @endif
-
-          @if (Auth::check() && Auth::user()->hasRole('admin'))
+            @if (Auth::check() && Auth::user()->hasRole('admin'))
 
           <li class="" >
             <a href="{{route('ShowCategorie')}}">
@@ -93,6 +91,12 @@
             </a>
           </li>
           @endif
+          <li class="" >
+            <a href="{{route('profile')}}">
+              <i class="now-ui-icons users_circle-08"></i>
+              <p>profile</p>
+            </a>
+          </li>
          
         </ul>
       </div>

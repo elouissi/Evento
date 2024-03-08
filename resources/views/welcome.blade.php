@@ -42,10 +42,14 @@
                         
                             @auth
                               <li>   
-                                @if (Auth::check() && Auth::user()->hasRole('admin') || Auth::check() && Auth::user()->hasRole('organisateur') || Auth::check() && Auth::user()->hasRole('spectateur'))
+                                @if (Auth::check() && Auth::user()->hasRole('admin') || Auth::check() && Auth::user()->hasRole('organisateur') )
 
                                 <a href="{{ url('/dashboard') }}" class="page-scroll">dashboard</a></li>
                                 @endif
+                                @if (Auth::check() && Auth::user()->hasRole('spectateur') )
+                                <a href="{{ url('/dashboard') }}" class="page-scroll">{{auth()->user()->name}}</a></li>
+                                @endif
+
                              <li>  
                                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf

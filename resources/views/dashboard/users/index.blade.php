@@ -34,12 +34,13 @@
         <a href="http://www.creative-tim.com" class="simple-text logo-mini">
           CT
         </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
+        <a href="{{url('home')}}" class="simple-text logo-normal">
+          EVENTO
         </a>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
+          @if (Auth::check() && Auth::user()->hasRole('admin') || Auth::check() && Auth::user()->hasRole('organisateur'))
           <li>
             <a href="{{url('dashboard')}}">
               <i class="now-ui-icons design_app"></i>
@@ -52,7 +53,8 @@
               <p>Evenement</p>
             </a>
           </li>
-          @if (Auth::check() && Auth::user()->hasRole('admin'))
+          @endif
+            @if (Auth::check() && Auth::user()->hasRole('admin'))
 
           <li class="" >
             <a href="{{route('ShowCategorie')}}">
@@ -62,8 +64,8 @@
           </li>
           <li class="active" >
             <a href="{{route('users')}}">
-                <i class="now-ui-icons users_single-02"></i>
-                <p>users</p>
+              <i class="now-ui-icons users_single-02"></i>
+              <p>users</p>
             </a>
           </li>
           @endif
@@ -75,6 +77,12 @@
             </a>
           </li>
           @endif
+          <li class="" >
+            <a href="{{route('profile')}}">
+              <i class="now-ui-icons users_circle-08"></i>
+              <p>profile</p>
+            </a>
+          </li>
          
         </ul>
       </div>

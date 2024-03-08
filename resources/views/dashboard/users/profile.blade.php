@@ -192,6 +192,7 @@
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
+          @if (Auth::check() && Auth::user()->hasRole('admin') || Auth::check() && Auth::user()->hasRole('organisateur'))
           <li>
             <a href="{{url('dashboard')}}">
               <i class="now-ui-icons design_app"></i>
@@ -204,7 +205,8 @@
               <p>Evenement</p>
             </a>
           </li>
-          @if (Auth::check() && Auth::user()->hasRole('admin'))
+          @endif
+            @if (Auth::check() && Auth::user()->hasRole('admin'))
 
           <li class="" >
             <a href="{{route('ShowCategorie')}}">
@@ -212,10 +214,10 @@
                          <p>categorie</p>
             </a>
           </li>
-          <li class="active" >
+          <li class="" >
             <a href="{{route('users')}}">
-                <i class="now-ui-icons users_single-02"></i>
-                <p>users</p>
+              <i class="now-ui-icons users_single-02"></i>
+              <p>users</p>
             </a>
           </li>
           @endif
@@ -227,6 +229,12 @@
             </a>
           </li>
           @endif
+          <li class="active" >
+            <a href="{{route('profile')}}">
+              <i class="now-ui-icons users_circle-08"></i>
+              <p>profile</p>
+            </a>
+          </li>
          
         </ul>
       </div>
@@ -317,40 +325,37 @@
           </div>
         </div>
       </div>
+
+      @if(auth()->user()->hasRole('spectateur'))
+
+      @foreach($evenements as $myevent)
+
       <div class="col-md-4">
-        <div class="card card-user">
+        <div class="card card-user" style="display: flex">
           <div class="image">
-            <img src="../assets/img/bg5.jpg" alt="...">
+            <img src="{{asset('storage/'.$myevent->image)}}" alt="...">
           </div>
           <div class="card-body">
             <div class="author">
               <a href="#">
-                 <h5 class="title">Mike Andrew</h5>
+                 <h5 class="title"> {{$myevent->titre}}</h5>
               </a>
               <p class="description">
-                michael24
+                {{$myevent->description}}
               </p>
             </div>
-            <p class="description text-center">
-              "Lamborghini Mercy <br>
-              Your chick she so thirsty <br>
-              I'm in that two seat Lambo"
+            <p class="description text-center"> prix {{$myevent->prix}} <br>
+             lieux : {{$myevent->lieux}} <br>
+             capacity :   {{$myevent->capacity}}
             </p>
           </div>
           <hr>
-          <div class="button-container">
-            <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-              <i class="fab fa-facebook-f"></i>
-            </button>
-            <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-              <i class="fab fa-twitter"></i>
-            </button>
-            <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-              <i class="fab fa-google-plus-g"></i>
-            </button>
-          </div>
+       
         </div>
       </div>
+      @endforeach
+      @endif
+
     </div>
   </div>
 

@@ -50,7 +50,12 @@ class HomeController extends Controller
         }
     }
     public function dashboard(){
-        
+
+       if( auth()->user()->hasRole('admin') ||auth()->user()->hasRole('organisateur')  ){         
         return view('dashboard.index');
+       }else{
+        return view('dashboard.users.profile');
+
+       }
     }
 }
