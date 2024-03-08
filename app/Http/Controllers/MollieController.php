@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Commande;
+use App\Models\Evenement;
 use Illuminate\Http\Request;
 use App\Models\Payment;
 use Carbon\Carbon;
@@ -24,6 +25,11 @@ class MollieController extends Controller
         
         $order_total_number = number_format($request->input('prix'), 2);
         $decimal_num_dec = str_replace(',', '', $order_total_number);
+        $capacity = $request->input('capacity');
+        $tickets_vendus = $request->input('tickets_vendus');
+        $new_tickets_vendus =$tickets_vendus +1;
+
+        $new_capacity = $capacity - 1;
 
         $payment = Mollie::api()->payments->create([
             "amount" => [
@@ -38,7 +44,9 @@ class MollieController extends Controller
 
         session()->put('paymentId', $payment->id);
         session()->put('product_name', $request->input('titre'));
-
+        session()->put('new_capacity', $new_capacity);
+        session()->put('new_tickets_vendus', $new_tickets_vendus);
+ 
     
         // redirect customer to Mollie checkout page
         return redirect($payment->getCheckoutUrl(), 303);
@@ -49,6 +57,8 @@ class MollieController extends Controller
       
         $paymentId = session()->get('paymentId');
         $product_name = session()->get('product_name');
+        $new_capacity = session()->get('new_capacity');
+        $new_tickets_vendus = session()->get('new_tickets_vendus');
          // dd($products_quantites);
         $payment = Mollie::api()->payments->get($paymentId);
         if($payment->isPaid())
@@ -64,6 +74,11 @@ class MollieController extends Controller
             $obj->product_name = $product_name;
             $obj->save();
 
+
+            Evenement::where('titre',$product_name)->update([
+                'capacity' => $new_capacity,
+                'tickets_vendus' =>$new_tickets_vendus
+            ]);
             // // create commands
             // foreach ($products_quantites as $produit_id => $qte) {
             //     Commande::create([

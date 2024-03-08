@@ -142,7 +142,8 @@
                 </div>
                 @endforeach
                
-            
+                    {{ $evenements->links('vendor.pagination.bootstrap-5') }}
+
             
         </div>
  

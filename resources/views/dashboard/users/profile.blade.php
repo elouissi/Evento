@@ -186,8 +186,8 @@
         <a href="http://www.creative-tim.com" class="simple-text logo-mini">
           CT
         </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
+        <a href="{{url('home')}}" class="simple-text logo-normal">
+          EVENTO
         </a>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">

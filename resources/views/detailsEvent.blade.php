@@ -114,6 +114,7 @@
                 
                         {{-- {{ dd($reservations->contains('status','publish'))}} --}}
                         @if ($reservations->contains('status','publish'))
+                          @if($evenement->capacity !== 0)
 
                         <form action="{{route('mollie')}}"  method="POST" >
                             @csrf
@@ -121,13 +122,21 @@
                            <input type="number"  style="display:none"  name="prix" value="{{$evenement->prix}}">
                            <input type="text" style="display:none"  name="id" value="{{$evenement->id}}">
                            <input type="text" style="display:none"  name="titre" value="{{$evenement->titre}}">
+                           <input type="text" style="display:none"  name="capacity" value="{{$evenement->capacity}}">
+                           <input type="text" style="display:none"  name="tickets_vendus" value="{{$evenement->tickets_vendus}}">
+
+ 
 
                              <button type="submit" class="btn btn-primary d-block">check out</button>
 
 
 
 
-                        </form>    
+                        </form>   
+                            @endif    
+                            @if($evenement->capacity == 0)
+                            <p>tous les tickets sont reserver</p>
+                            @endif
 
 
                         @elseif ($reservations->contains('status','refuse'))
