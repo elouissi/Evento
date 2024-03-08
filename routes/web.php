@@ -51,7 +51,8 @@ Route::put('/categorie/{Categorie}', [CategorieController::class, 'update'])->na
 
 
 Route::get('/users', [UserController::class, 'index'])->name('users');
-Route::get('/users/baner', [UserController::class, 'BanerUser'])->name('BanerUser');
+Route::patch('/baner/{id}', [UserController::class, 'BanerUser'])->name('BanerUser');
+Route::patch('/debaner/{id}', [UserController::class, 'DeBanerUser'])->name('DeBanerUser');
 
 });
 

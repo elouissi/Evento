@@ -327,6 +327,8 @@
       </div>
 
       @if(auth()->user()->hasRole('spectateur'))
+      @if ($reservations->contains('user_id',auth()->id()))
+
 
       @foreach($evenements as $myevent)
 
@@ -354,6 +356,7 @@
         </div>
       </div>
       @endforeach
+      @endif
       @endif
 
     </div>

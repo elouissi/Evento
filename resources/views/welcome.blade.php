@@ -47,7 +47,7 @@
                                 <a href="{{ url('/dashboard') }}" class="page-scroll">dashboard</a></li>
                                 @endif
                                 @if (Auth::check() && Auth::user()->hasRole('spectateur') )
-                                <a href="{{ url('/dashboard') }}" class="page-scroll">{{auth()->user()->name}}</a></li>
+                                <a href="{{ route('profile') }}" class="page-scroll">{{auth()->user()->name}}</a></li>
                                 @endif
 
                              <li>  

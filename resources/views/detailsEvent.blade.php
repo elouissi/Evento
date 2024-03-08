@@ -133,7 +133,7 @@
 
 
                         </form>   
-                            @endif    
+                            @endif    &
                             @if($evenement->capacity == 0)
                             <p>tous les tickets sont reserver</p>
                             @endif
@@ -143,7 +143,15 @@
                             <!-- Si une réservation avec le statut 'refuse' est trouvée -->
                             <p>wait response of organizer</p>
                         @else
+                               @if(auth()->user()->status  == 'normal' )
+
                             <a href="{{route('CreateReserv',$evenement->id)}}" class="btn btn-danger d-block">RESERVER </a>
+
+                               @else
+
+                               <p>vous etes baner</p>
+
+                               @endif
                         @endif
                 
                     @endif
