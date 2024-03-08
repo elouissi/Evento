@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorie;
 use App\Models\Evenement;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -51,8 +53,30 @@ class HomeController extends Controller
     }
     public function dashboard(){
 
-       if( auth()->user()->hasRole('admin') ||auth()->user()->hasRole('organisateur')  ){         
-        return view('dashboard.index');
+       if( auth()->user()->hasRole('admin')  ){  
+
+        $data_m = Evenement::select('id', 'created_at')->where('accptance', 'manuel' )->get()->groupBy(function($data){
+               return  Carbon::parse($data->created_at)->format("D");
+        });
+        $data_a = Evenement::select('id', 'created_at')->where('accptance', 'auto' )->get()->groupBy(function($data){
+               return  Carbon::parse($data->created_at)->format("D");
+        });
+ 
+        // $months = [];
+        // $monthCount = [];
+
+        // foreach($data as $month => $values){
+        //     $months[]= $month;
+        //     $monthCount [] = count($values);
+
+
+        // }
+
+        $ev_acp = Evenement::where('status','accept')->count();
+        $ev_ref =  Evenement::where('status','attend')->count();
+  
+        return view('dashboard.index',[ 'ev_acp' => $ev_acp , 'ev_ref' => $ev_ref,'data_a' => $data_a ,'data_m' => $data_m]);
+
        }else{
         return view('dashboard.users.profile');
 

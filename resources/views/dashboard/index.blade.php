@@ -16,7 +16,6 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
@@ -174,86 +173,15 @@
       <div class="panel-header panel-header-lg">
         <canvas id="bigDashboardChart"></canvas>
       </div>
-      <div class="content">
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="card card-chart">
-              <div class="card-header">
-                <h5 class="card-category">Global Sales</h5>
-                <h4 class="card-title">Shipped Products</h4>
-                <div class="dropdown">
-                  <button type="button" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
-                    <i class="now-ui-icons loader_gear"></i>
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                    <a class="dropdown-item text-danger" href="#">Remove Data</a>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="chart-area">
-                  <canvas id="lineChartExample"></canvas>
-                </div>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="card card-chart">
-              <div class="card-header">
-                <h5 class="card-category">2018 Sales</h5>
-                <h4 class="card-title">All products</h4>
-                <div class="dropdown">
-                  <button type="button" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
-                    <i class="now-ui-icons loader_gear"></i>
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                    <a class="dropdown-item text-danger" href="#">Remove Data</a>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="chart-area">
-                  <canvas id="lineChartExampleWithNumbersAndGrid"></canvas>
-                </div>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="card card-chart">
-              <div class="card-header">
-                <h5 class="card-category">Email Statistics</h5>
-                <h4 class="card-title">24 Hours Performance</h4>
-              </div>
-              <div class="card-body">
-                <div class="chart-area">
-                  <canvas id="barChartSimpleGradientsNumbers"></canvas>
-                </div>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="content" style="display: flex ; gap : 10px; border-radius:10px">
+        <div id="piechart" style="width: 49%; height: 400px;margin:auto">
         </div>
-        <div class="row">
+        <div id="columnchart_material"  style="width: 49%;height: 400px ;margin : auto "></div>
+
+     </div>
+      
+        </div>
+        {{-- <div class="row">
           <div class="col-md-6">
             <div class="card  card-tasks">
               <div class="card-header ">
@@ -434,7 +362,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> --}}
       </div>
       <footer class="footer">
         <div class=" container-fluid ">
@@ -466,7 +394,68 @@
       </footer>
     </div>
   </div>
+  {{-- <script type="text/javascript">
+  var _ydata = JSON.parse('{!! json_encode($months)!!}')
+  var _xdata = JSON.parse('{!! json_encode($monthCount)!!}')
+
+  myChart.data.labels = months;
+
+// Mettez à jour les données du graphique avec le nombre d'utilisateurs par mois
+myChart.data.datasets[0].data = monthCount;
+
+// Rafraîchissez le graphique
+myChart.update();
+ 
+  </script> --}}
   <!--   Core JS Files   -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+     <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+        ['Day', 'Manuel', 'Auto'],
+        @foreach ($data_m as $day => $count)
+            ['{{$day}}', {{$count->count()}}, {{$data_a[$day]->count() ?? 0}}],
+        @endforeach
+    ]);
+
+    var options = {
+        chart: {
+            title: 'Evenement Acceptance',
+            subtitle: 'Manuel vs Auto Acceptance',
+        },
+        bars: 'vertical',
+        colors: ['#9C27B0', '#153254']   
+       };
+
+    var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+    chart.draw(data, google.charts.Bar.convertOptions(options));
+}
+
+    </script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Status', 'Count'],
+        ['Accepted', {{$ev_acp}}],
+        ['Pending', {{$ev_ref}}]
+    ]);
+
+    var options = {
+        title: 'Evenement Status',
+        colors: ['#9C27B0', '#153254']   
+
+    };
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
