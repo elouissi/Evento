@@ -39,13 +39,17 @@
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-          @if (Auth::check() && Auth::user()->hasRole('admin') || Auth::check() && Auth::user()->hasRole('organisateur'))
+          @if (Auth::check() && Auth::user()->hasRole('admin') )
           <li>
             <a href="{{url('dashboard')}}">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
             </a>
           </li>
+          @endif
+
+          @if (Auth::check() && Auth::user()->hasRole('organisateur')  ||Auth::check() && Auth::user()->hasRole('admin')  )
+
           <li class="active" >
             <a href="{{route('evenement')}}">
               <i class="now-ui-icons design_bullet-list-67"></i>
@@ -347,7 +351,7 @@
                   <div class="form-group">
                     <label for="1">ci vous voulez controller l'autorisation a la participation a ce evenement </label>
                     <div class="form-check">
-                      <input class="form-check-input" name="accptance" value="manuel"  type="checkbox" >
+                      <input class="form-check-input" name="accptance" value="manuel"  type="radio" >
                       <label class="form-check-label" for="exampleRadios1">
                         accepter
                       </label>

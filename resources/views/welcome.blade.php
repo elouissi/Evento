@@ -142,16 +142,22 @@
                 </div>
                 @endforeach
                
-                    {{ $evenements->links('vendor.pagination.bootstrap-5') }}
 
             
         </div>
  
     </section>
+
+
     
 
  
     <section id="last">
+        <div style="    display: flex;
+        justify-content:center" >
+        {{ $evenements->links('vendor.pagination.bootstrap-5') }}
+    </div>
+
  
         <div class="container">
             <div class="row">

@@ -40,13 +40,17 @@
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-          @if (Auth::check() && Auth::user()->hasRole('admin') || Auth::check() && Auth::user()->hasRole('organisateur'))
+          @if (Auth::check() && Auth::user()->hasRole('admin') )
           <li>
             <a href="{{url('dashboard')}}">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
             </a>
           </li>
+          @endif
+
+          @if (Auth::check() && Auth::user()->hasRole('organisateur')  || Auth::check() && Auth::user()->hasRole('admin') )
+
           <li class="" >
             <a href="{{route('evenement')}}">
               <i class="now-ui-icons design_bullet-list-67"></i>
@@ -248,10 +252,7 @@
                   </td>
                   
                 </tr>
-            
-            
-           
-   @endforeach
+            @endforeach
  
              
               </tbody>

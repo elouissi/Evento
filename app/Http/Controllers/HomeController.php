@@ -13,7 +13,7 @@ class HomeController extends Controller
     
     public function index(Request $request)
     {
-        $evenements = Evenement::with('user','categorie')->where('status','accept')->latest()->paginate(10);
+        $evenements = Evenement::with('user','categorie')->where('status','accept')->latest()->paginate(6);
         $categories = Categorie::all();
         if ($request->ajax()) {
 

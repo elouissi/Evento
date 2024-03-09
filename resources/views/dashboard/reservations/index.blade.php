@@ -34,30 +34,36 @@
         <a href="http://www.creative-tim.com" class="simple-text logo-mini">
           CT
         </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
+        <a href="{{url('home')}}"" class="simple-text logo-normal">
+          EVENTO
         </a>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
+          @if (Auth::check() && Auth::user()->hasRole('admin') )
           <li>
             <a href="{{url('dashboard')}}">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
             </a>
           </li>
+          @endif
+
+          @if (Auth::check() && Auth::user()->hasRole('organisateur')  ||Auth::check() && Auth::user()->hasRole('admin')  )
+
           <li class="" >
             <a href="{{route('evenement')}}">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Evenement</p>
             </a>
           </li>
-          @if (Auth::check() && Auth::user()->hasRole('admin'))
+          @endif
+            @if (Auth::check() && Auth::user()->hasRole('admin'))
 
           <li class="" >
-            <a href="{{route('Showreservation')}}">
+            <a href="{{route('ShowCategorie')}}">
               <i class="now-ui-icons location_map-big"></i>
-                         <p>reservation</p>
+                         <p>categorie</p>
             </a>
           </li>
           <li class="" >
@@ -68,15 +74,19 @@
           </li>
           @endif
           @if (Auth::check() && Auth::user()->hasRole('organisateur'))
-          <li class="active">
+          <li class="active" >
             <a href="{{route('reservation')}}">
                 <i class="now-ui-icons design_bullet-list-67"></i>
                 <p>reservations</p>
             </a>
           </li>
           @endif
-
-
+          <li class="" >
+            <a href="{{route('profile')}}">
+              <i class="now-ui-icons users_circle-08"></i>
+              <p>profile</p>
+            </a>
+          </li>
          
         </ul>
       </div>
